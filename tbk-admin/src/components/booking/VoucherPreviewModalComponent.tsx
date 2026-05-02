@@ -7,7 +7,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Loader2, X } from "lucide-react";
+import { ExternalLink, Loader2, X } from "lucide-react";
 import VoucherDetailsCardComponent from "./VoucherDetailsCardComponent";
 import SendOptionsComponent from "./SendOptionsComponent";
 import { useGenerateVoucher } from "@/hooks/useGenerateVoucher";
@@ -46,10 +46,7 @@ export default function VoucherPreviewModalComponent({
     const handleGenerateVoucher = async () => {
         generateVoucherMutation.mutate(booking.id, {
             onSuccess: (response) => {
-                // Convert Google Drive view URL to embed URL
-                const driveUrl = response.voucherUrl;
-                const embedUrl = driveUrl.replace('/view', '/preview');
-                setVoucherUrl(embedUrl);
+                setVoucherUrl(response.voucherUrl);
                 handleSuccess("Voucher generated successfully!");
             },
             onError: handleMutationError
@@ -63,7 +60,7 @@ export default function VoucherPreviewModalComponent({
                 bookingId: booking.id,
                 email: contactInfo,
                 message: message,
-                voucherUrl: voucherUrl!.replace('/preview', '/view')
+                voucherUrl: voucherUrl!
             }, {
                 onSuccess: () => {
                     handleSuccess("Voucher sent via email successfully!");
@@ -76,7 +73,7 @@ export default function VoucherPreviewModalComponent({
             sendWhatsAppMutation.mutate({
                 bookingId: booking.id,
                 phoneNumber: contactInfo,
-                voucherUrl: voucherUrl!.replace('/preview', '/view')
+                voucherUrl: voucherUrl!
             }, {
                 onSuccess: () => {
                     handleSuccess("Voucher sent via WhatsApp successfully!");
@@ -159,13 +156,23 @@ export default function VoucherPreviewModalComponent({
                                 </div>
                                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                                     <span>Voucher generated successfully</span>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={handleGenerateVoucher}
-                                    >
-                                        Regenerate
-                                    </Button>
+                                    <div className="flex items-center gap-2">
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={handleGenerateVoucher}
+                                        >
+                                            Regenerate
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => window.open(voucherUrl!, '_blank')}
+                                        >
+                                            <ExternalLink className="h-3 w-3 mr-1" />
+                                            View Full PDF
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         )}

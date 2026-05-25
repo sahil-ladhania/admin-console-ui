@@ -84,7 +84,7 @@ function VillaCard({ villa, isPriority }: { villa: any; isPriority: boolean }) {
   ];
 
   return (
-    <div className="rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden w-full bg-white">
+    <div className="rounded-xl border border-border bg-card shadow-soft hover:shadow-medium transition-all duration-200 overflow-hidden w-full">
       {/* Image with status badge overlay */}
       <div className="relative">
         <img
@@ -105,15 +105,15 @@ function VillaCard({ villa, isPriority }: { villa: any; isPriority: boolean }) {
       <div className="p-4 space-y-3">
         {/* Villa name + ID */}
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-lg font-bold text-foreground leading-snug">{villa.name}</h3>
-          <span className="text-[11px] text-muted-foreground shrink-0 mt-1">#{villa.id}</span>
+          <h3 className="text-base font-bold text-foreground leading-snug">{villa.name}</h3>
+          <span className="text-[11px] text-muted-foreground shrink-0 mt-0.5">#{villa.id}</span>
         </div>
 
         {/* View Location */}
         {villa.location ? (
           <button
             onClick={handleLocationClick}
-            className="inline-flex items-center gap-1.5 border border-orange-400 text-orange-500 rounded-full px-3 py-1 text-xs font-medium hover:bg-orange-50 transition-colors"
+            className="inline-flex items-center gap-1.5 border border-primary/40 text-primary rounded-full px-3 py-1 text-xs font-medium hover:bg-primary/10 transition-colors"
           >
             <MapPin className="h-3 w-3 shrink-0" />
             View Location
@@ -130,8 +130,8 @@ function VillaCard({ villa, isPriority }: { villa: any; isPriority: boolean }) {
         <div className="flex flex-row flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
           {stats.map((stat, i) => (
             <span key={i} className="flex items-center gap-1">
-              {i > 0 && <span className="text-gray-300 mr-0 select-none">|</span>}
-              <stat.icon className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+              {i > 0 && <span className="text-border mr-0 select-none">|</span>}
+              <stat.icon className="h-3.5 w-3.5 text-primary/70 shrink-0" />
               <span className="font-medium text-foreground">{stat.label}</span>
             </span>
           ))}
@@ -141,12 +141,12 @@ function VillaCard({ villa, isPriority }: { villa: any; isPriority: boolean }) {
         {amenityNames.length > 0 && (
           <div className="flex flex-row flex-wrap gap-2">
             {amenityNames.slice(0, 3).map((name, i) => (
-              <span key={i} className="text-xs bg-gray-100 text-gray-600 rounded-full px-3 py-1">
+              <span key={i} className="text-xs bg-secondary text-secondary-foreground rounded-full px-3 py-1">
                 {name}
               </span>
             ))}
             {amenityNames.length > 3 && (
-              <span className="text-xs bg-gray-100 text-gray-500 rounded-full px-3 py-1">
+              <span className="text-xs bg-secondary text-muted-foreground rounded-full px-3 py-1">
                 +{amenityNames.length - 3} more
               </span>
             )}
@@ -154,7 +154,7 @@ function VillaCard({ villa, isPriority }: { villa: any; isPriority: boolean }) {
         )}
 
         {/* Description */}
-        <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
+        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
           {villa.description || "No description available"}
         </p>
       </div>

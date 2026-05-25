@@ -9,7 +9,7 @@ interface StatCardProps {
   gradient?: string;
 }
 
-const StatCard = ({ title, subtitle, value, icon: Icon, gradient = "bg-gradient-primary" }: StatCardProps) => (
+const StatCard = ({ title, subtitle, value, icon: Icon }: StatCardProps) => (
   <Card className="border-border shadow-soft hover:shadow-medium transition-all duration-200">
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <div>
@@ -20,15 +20,15 @@ const StatCard = ({ title, subtitle, value, icon: Icon, gradient = "bg-gradient-
           <p className="text-[11px] text-muted-foreground/70 mt-0.5 leading-tight">{subtitle}</p>
         )}
       </div>
-      <div className={`p-1.5 sm:p-2 rounded-lg ${gradient}`}>
-        <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary-foreground" />
-      </div>
+      {/* Clean icon — no background, just the brand-colored glyph */}
+      <Icon className="h-5 w-5 text-primary opacity-80 shrink-0" />
     </CardHeader>
     <CardContent className="pt-0">
-      <div className="text-xl sm:text-2xl font-bold text-foreground">{value}</div>
+      <div className="text-xl sm:text-2xl font-bold text-foreground font-mono">{value}</div>
     </CardContent>
   </Card>
 );
+
 
 interface OwnerStatsComponentProps {
   data: any;

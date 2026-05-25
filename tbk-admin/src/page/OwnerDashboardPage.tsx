@@ -78,28 +78,34 @@ export default function OwnerDashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            {/* View Calendar */}
             <div
               onClick={() => navigate('/owner/calendar')}
-              className="p-3 sm:p-4 rounded-lg bg-gradient-accent hover:shadow-medium transition-all duration-200 cursor-pointer"
+              className="group p-4 sm:p-5 rounded-xl border border-border/60 bg-secondary/40 hover:bg-primary/10 hover:border-primary/40 hover:shadow-soft transition-all duration-200 cursor-pointer"
             >
-              <div className="flex items-center gap-2 sm:gap-3">
-                <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-accent-foreground" />
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-background/80 border border-border/50 group-hover:border-primary/30 transition-colors shrink-0">
+                  <Calendar className="h-5 w-5 text-primary opacity-80" />
+                </div>
                 <div>
-                  <h3 className="font-semibold text-sm sm:text-base text-accent-foreground">View Calendar</h3>
-                  <p className="text-xs sm:text-sm text-accent-foreground/70">Check availability</p>
+                  <h3 className="font-semibold text-sm sm:text-base text-foreground">View Calendar</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">Check availability</p>
                 </div>
               </div>
             </div>
 
+            {/* Analytics */}
             <div
               onClick={() => navigate('/owner/analytics')}
-              className="p-3 sm:p-4 rounded-lg bg-gradient-sunset hover:shadow-medium transition-all duration-200 cursor-pointer"
+              className="group p-4 sm:p-5 rounded-xl border border-border/60 bg-secondary/40 hover:bg-primary/10 hover:border-primary/40 hover:shadow-soft transition-all duration-200 cursor-pointer"
             >
-              <div className="flex items-center gap-2 sm:gap-3">
-                <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 text-primary-foreground" />
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-background/80 border border-border/50 group-hover:border-primary/30 transition-colors shrink-0">
+                  <TrendingUp className="h-5 w-5 text-primary opacity-80" />
+                </div>
                 <div>
-                  <h3 className="font-semibold text-sm sm:text-base text-primary-foreground">Analytics</h3>
-                  <p className="text-xs sm:text-sm text-primary-foreground/70">Performance reports</p>
+                  <h3 className="font-semibold text-sm sm:text-base text-foreground">Analytics</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">Performance reports</p>
                 </div>
               </div>
             </div>

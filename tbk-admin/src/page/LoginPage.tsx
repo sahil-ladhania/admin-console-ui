@@ -80,7 +80,10 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex min-h-screen bg-background text-foreground antialiased">
+        <div
+            className="flex min-h-screen text-foreground antialiased"
+            style={{ background: 'linear-gradient(to right, #0a0a0a 0%, #0d0d0d 50%, #111111 100%)' }}
+        >
             <HeroSectionComponent />
             <LoginFormComponent
                 email={email}

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 
-// TBK Logo inline so it renders white on the dark obsidian panel
 const TBKLogo = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 140 205" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
     <path d="M117.178 156.4L102.975 120.52L102.573 119.511L74.8607 49.5363L80.2813 35.9442L113.381 119.524L113.783 120.533L127.986 156.413L117.178 156.4ZM76.2334 156.351L61.4123 156.333L61.4558 120.47L76.2769 120.488L76.2334 156.351ZM129.7 156.415L115.497 120.535L115.095 119.526L81.151 33.7965L49.8508 112.274L74.0212 51.674L100.879 119.509L101.281 120.518L115.494 156.398L77.4232 156.352L77.4679 119.48L57.7467 119.456L57.702 156.328L32.3044 156.297L31.8089 157.558L130.213 157.677L129.71 156.415L129.7 156.415Z" fill="currentColor" />
@@ -17,7 +16,11 @@ export default function HeroSectionComponent() {
       style={{ background: '#0a0a0a' }}
     >
       {/* ── Architectural grid overlay ── */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.04 }} xmlns="http://www.w3.org/2000/svg">
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ opacity: 0.035 }}
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <defs>
           <pattern id="tbk-grid" width="48" height="48" patternUnits="userSpaceOnUse">
             <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#c9a84c" strokeWidth="0.5" />
@@ -30,86 +33,94 @@ export default function HeroSectionComponent() {
       <motion.div
         className="absolute rounded-full pointer-events-none"
         style={{
-          width: 520, height: 520,
-          top: '-15%', right: '-20%',
-          background: 'radial-gradient(circle, rgba(201,168,76,0.13) 0%, transparent 70%)',
-          filter: 'blur(48px)',
-        }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.8, 1, 0.8] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          width: 400, height: 400,
-          bottom: '2%', left: '-12%',
-          background: 'radial-gradient(circle, rgba(201,168,76,0.09) 0%, transparent 70%)',
+          width: 560, height: 560,
+          top: '-18%', right: '-22%',
+          background: 'radial-gradient(circle, rgba(201,168,76,0.11) 0%, transparent 70%)',
           filter: 'blur(56px)',
         }}
-        animate={{ scale: [1, 1.14, 1], opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        animate={{ scale: [1, 1.07, 1], opacity: [0.8, 1, 0.8] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         className="absolute rounded-full pointer-events-none"
         style={{
-          width: 260, height: 260,
-          top: '45%', left: '52%',
-          background: 'radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)',
-          filter: 'blur(36px)',
+          width: 420, height: 420,
+          bottom: '0%', left: '-14%',
+          background: 'radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%)',
+          filter: 'blur(60px)',
         }}
-        animate={{ scale: [1, 1.18, 1], opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+        animate={{ scale: [1, 1.12, 1], opacity: [0.6, 0.85, 0.6] }}
+        transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
       />
 
-      {/* ── Thin gold vertical separator on right edge ── */}
+      {/* ── Right-edge fade-to-right-panel (no hard line) ── */}
       <div
-        className="absolute right-0 inset-y-0 w-px pointer-events-none"
+        className="absolute right-0 inset-y-0 w-32 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(201,168,76,0.35) 25%, rgba(201,168,76,0.35) 75%, transparent 100%)',
+          background: 'linear-gradient(to right, transparent, rgba(17,17,17,0.85))',
         }}
       />
 
       {/* ── Main content ── */}
       <div className="relative z-10 flex flex-col justify-between h-full p-12">
 
-        {/* Top — logo wordmark */}
+        {/* Top — logo, large and visible */}
         <motion.div
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
+          className="flex items-center gap-3"
         >
-          <TBKLogo className="h-10 w-auto" style={{ color: 'rgba(255,255,255,0.75)' } as React.CSSProperties} />
+          <TBKLogo className="h-16 w-auto" style={{ color: 'rgba(255,255,255,0.9)' } as React.CSSProperties} />
+          <div>
+            <div
+              style={{
+                fontFamily: "'Cormorant Garant', Georgia, serif",
+                fontSize: '1.3rem',
+                fontWeight: 500,
+                color: 'rgba(255,255,255,0.88)',
+                letterSpacing: '0.02em',
+                lineHeight: 1.1,
+              }}
+            >
+              TBK Villas
+            </div>
+            <div
+              style={{
+                fontFamily: "'DM Sans', system-ui, sans-serif",
+                fontSize: '0.6rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: 'rgba(201,168,76,0.65)',
+                marginTop: '2px',
+              }}
+            >
+              Management Platform
+            </div>
+          </div>
         </motion.div>
 
         {/* Centre — headline block */}
-        <div className="space-y-7">
+        <div className="space-y-6">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.95, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Gold accent rule */}
-            <div className="mb-7" style={{ height: 1, width: 40, background: '#c9a84c' }} />
-
+            <div className="mb-6" style={{ height: 1, width: 36, background: '#c9a84c' }} />
             <h1
-              className="text-white leading-[1.05]"
+              className="text-white leading-[1.08]"
               style={{
                 fontFamily: "'Cormorant Garant', Georgia, serif",
-                fontSize: 'clamp(2.6rem, 4.2vw, 3.8rem)',
+                fontSize: 'clamp(2.4rem, 3.8vw, 3.5rem)',
                 fontWeight: 300,
-                letterSpacing: '-0.02em',
+                letterSpacing: '-0.015em',
               }}
             >
-              Property
+              Villa Management,
               <br />
-              <em
-                style={{
-                  color: '#c9a84c',
-                  fontStyle: 'italic',
-                  fontWeight: 400,
-                }}
-              >
-                Intelligence.
+              <em style={{ color: '#c9a84c', fontStyle: 'italic', fontWeight: 400 }}>
+                Simplified.
               </em>
             </h1>
           </motion.div>
@@ -119,36 +130,37 @@ export default function HeroSectionComponent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.95, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              color: 'rgba(245,245,240,0.45)',
+              color: 'rgba(245,245,240,0.42)',
               fontFamily: "'DM Sans', system-ui, sans-serif",
               fontWeight: 400,
-              fontSize: '0.9375rem',
-              lineHeight: 1.7,
-              maxWidth: '22rem',
+              fontSize: '0.9rem',
+              lineHeight: 1.75,
+              maxWidth: '20rem',
             }}
           >
-            For the teams that manage<br />Goa's finest villas.
+            Bookings, finances, guests, and villas —
+            <br />all in one place.
           </motion.p>
         </div>
 
-        {/* Bottom — console label */}
+        {/* Bottom — role note */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.7 }}
           className="flex items-center gap-3"
         >
-          <div style={{ height: 1, width: 20, background: '#c9a84c', opacity: 0.6 }} />
+          <div style={{ height: 1, width: 18, background: 'rgba(201,168,76,0.45)' }} />
           <span
             style={{
-              color: 'rgba(201,168,76,0.55)',
+              color: 'rgba(201,168,76,0.45)',
               fontFamily: "'DM Sans', system-ui, sans-serif",
-              fontSize: '0.65rem',
-              letterSpacing: '0.18em',
+              fontSize: '0.62rem',
+              letterSpacing: '0.16em',
               textTransform: 'uppercase',
             }}
           >
-            TBK Admin Console
+            Owners · Admins · Agents
           </span>
         </motion.div>
 

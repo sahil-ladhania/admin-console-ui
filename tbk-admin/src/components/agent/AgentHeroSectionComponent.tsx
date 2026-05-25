@@ -21,7 +21,7 @@ export default function AgentHeroSectionComponent({
 }) {
 
     return (
-        <section className="relative bg-gradient-to-br from-primary via-primary-glow to-accent rounded-xl sm:rounded-2xl py-10 sm:py-16 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-primary via-primary-glow to-accent rounded-xl sm:rounded-2xl pt-16 sm:pt-20 pb-10 sm:pb-16 overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-10 left-10 w-16 sm:w-20 h-16 sm:h-20 bg-white/10 rounded-full blur-lg"></div>
             <div className="absolute bottom-10 right-10 w-20 sm:w-24 h-20 sm:h-24 bg-accent/20 rounded-full blur-xl"></div>
@@ -37,7 +37,7 @@ export default function AgentHeroSectionComponent({
                 </div>
 
                 {/* Filter Section */}
-                <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-2xl max-w-5xl mx-auto">
+                <div className="bg-card/95 backdrop-blur-sm border border-border/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-2xl max-w-5xl mx-auto">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                         {/* Check-in Date */}
                         <div className="space-y-1.5 sm:space-y-2">

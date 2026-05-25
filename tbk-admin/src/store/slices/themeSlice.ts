@@ -1,0 +1,26 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+type Theme = 'light' | 'dark';
+
+interface ThemeState {
+  theme: Theme;
+}
+
+// Default to dark — obsidian/gold is the primary TBK admin aesthetic
+const initialState: ThemeState = { theme: 'dark' };
+
+export const themeSlice = createSlice({
+  name: 'theme',
+  initialState,
+  reducers: {
+    setTheme(state, action: PayloadAction<Theme>) {
+      state.theme = action.payload;
+    },
+    toggleTheme(state) {
+      state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    },
+  },
+});
+
+export const { setTheme, toggleTheme } = themeSlice.actions;
+export default themeSlice.reducer;

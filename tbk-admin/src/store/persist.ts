@@ -6,6 +6,7 @@ import villasReducer from '../store/slices/villasSlice.ts';
 import bookingsReducer from '../store/slices/bookingsSlice.ts';
 import amenitiesReducer from '../store/slices/amenitiesSlice.ts';
 import expensesReducer from '../store/slices/expensesSlice.ts';
+import themeReducer from '../store/slices/themeSlice.ts';
 
 const rootReducer = combineReducers({
   auth : authReducer,
@@ -13,12 +14,13 @@ const rootReducer = combineReducers({
   bookings : bookingsReducer,
   amenities : amenitiesReducer,
   expenses : expensesReducer,
+  theme : themeReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "theme"],
 };
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import { lazy, Suspense } from "react";
+import { useTheme } from "@/hooks/useTheme";
 const LoginPage = lazy(() => import("./page/LoginPage"));
 const ForgotPasswordPage = lazy(() => import("./page/ForgotPasswordPage"));
 const ChangePasswordPage = lazy(() => import("./page/ChangePasswordPage"));
@@ -27,61 +28,66 @@ const Layout = lazy(() => import("./components/common/Layout").then(m => ({ defa
 const PublicRoute = lazy(() => import("./components/common/PublicRoute"));
 import BrandedLoader from "./components/common/BrandedLoader";
 
-const App = () => (
-  <TooltipProvider>
-    <Toaster />
-    <Sonner />
-    <BrowserRouter>
-      <Suspense fallback={<BrandedLoader />}>
-        <Routes>
-          {/* Un-Authenticated Routes */}
-          <Route element={<PublicRoute />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          </Route>
+const App = () => {
+  // Sync .dark class on <html> from persisted Redux theme state on every render
+  useTheme();
 
-          {/* Role-based Home Redirect */}
-          <Route path="/home" element={<RoleBasedHomeRedirectComponent />} />
-
-          {/* Admin Only Routes */}
-          <Route element={<RoleBasedRouteComponent blockedRoles={['Owner', 'Agent']} />}>
-            <Route path="/change-password" element={<ChangePasswordPage />} />
-            <Route element={<Layout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/calendar" element={<CalendarPage />} />
-              <Route path="/booking" element={<NewBookingPage />} />
-              <Route path="/bookings" element={<ManageBookingsPage />} />
-              <Route path="/villas" element={<VillasPage />} />
-              <Route path="/villas/:id" element={<SpecificVillaPage />} />
-              <Route path="/expenses" element={<ManageExpensesPage />} />
-              <Route path="/finance" element={<ManageFinancePage />} />
-              <Route path="/settings" element={<SettingsPage />} />
+  return (
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Suspense fallback={<BrandedLoader />}>
+          <Routes>
+            {/* Un-Authenticated Routes */}
+            <Route element={<PublicRoute />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             </Route>
-          </Route>
 
-          {/* Owner Only Routes */}
-          <Route element={<RoleBasedRouteComponent allowedRoles={['Owner']} />}>
-            <Route element={<Layout />}>
-              <Route path="/owner-dashboard" element={<OwnerDashboardPage />} />
-              <Route path="/owner/calendar" element={<OwnerCalenderPage />} />
-              <Route path="/owner/analytics" element={<OwnerAnalyticsPage />} />
+            {/* Role-based Home Redirect */}
+            <Route path="/home" element={<RoleBasedHomeRedirectComponent />} />
+
+            {/* Admin Only Routes */}
+            <Route element={<RoleBasedRouteComponent blockedRoles={['Owner', 'Agent']} />}>
+              <Route path="/change-password" element={<ChangePasswordPage />} />
+              <Route element={<Layout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/calendar" element={<CalendarPage />} />
+                <Route path="/booking" element={<NewBookingPage />} />
+                <Route path="/bookings" element={<ManageBookingsPage />} />
+                <Route path="/villas" element={<VillasPage />} />
+                <Route path="/villas/:id" element={<SpecificVillaPage />} />
+                <Route path="/expenses" element={<ManageExpensesPage />} />
+                <Route path="/finance" element={<ManageFinancePage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* Agent Only Routes */}
-          <Route element={<RoleBasedRouteComponent allowedRoles={['Agent']} />}>
-            <Route element={<Layout />}>
-              <Route path="/agent" element={<AgentLandingPage />} />
+            {/* Owner Only Routes */}
+            <Route element={<RoleBasedRouteComponent allowedRoles={['Owner']} />}>
+              <Route element={<Layout />}>
+                <Route path="/owner-dashboard" element={<OwnerDashboardPage />} />
+                <Route path="/owner/calendar" element={<OwnerCalenderPage />} />
+                <Route path="/owner/analytics" element={<OwnerAnalyticsPage />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* Error Pages */}
-          <Route path="/unauthorized" element={<UnauthorizedPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-  </TooltipProvider>
-);
+            {/* Agent Only Routes */}
+            <Route element={<RoleBasedRouteComponent allowedRoles={['Agent']} />}>
+              <Route element={<Layout />}>
+                <Route path="/agent" element={<AgentLandingPage />} />
+              </Route>
+            </Route>
+
+            {/* Error Pages */}
+            <Route path="/unauthorized" element={<UnauthorizedPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </TooltipProvider>
+  );
+};
 
 export default App;

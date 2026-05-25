@@ -26,6 +26,11 @@ export default {
 			'2xl': '1536px',
 		},
 		extend: {
+			fontFamily: {
+				display: ['Cormorant Garant', 'Georgia', 'serif'],
+				body:    ['DM Sans', 'system-ui', 'sans-serif'],
+				mono:    ['JetBrains Mono', 'Menlo', 'monospace'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -85,7 +90,16 @@ export default {
 					'3': 'hsl(var(--chart-3))',
 					'4': 'hsl(var(--chart-4))',
 					'5': 'hsl(var(--chart-5))'
-				}
+				},
+				/* ── Raw TBK palette — use when you need explicit brand colors ── */
+				obsidian:  '#0d0d0d',
+				charcoal:  '#1a1a1a',
+				gold:      '#c9a84c',
+				ivory:     '#f5f5f0',
+				cream:     '#faf7f2',
+				parchment: '#f0ead8',
+				olive:     '#7a7a50',
+				bark:      '#3d3526',
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',

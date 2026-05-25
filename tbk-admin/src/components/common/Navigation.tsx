@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useState, useCallback, memo } from "react";
 import ChangePasswordModalComponent from "@/components/auth/ChangePasswordModalComponent";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/common/ThemeToggle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useMutation } from "@tanstack/react-query";
@@ -188,6 +189,9 @@ export function Navigation() {
                   onItemClick={() => setIsMobileMenuOpen(false)}
                 />
               </nav>
+              <div className="pt-4 pb-2 border-t border-border flex items-center px-2">
+                <ThemeToggle />
+              </div>
               <ProfileSection
                 firstName={firstName}
                 lastName={lastName}
@@ -216,6 +220,9 @@ export function Navigation() {
             </nav>
           </div>
           <div className="p-6 pt-0">
+            <div className="pb-2 mb-2 border-t border-border flex items-center pt-4">
+              <ThemeToggle />
+            </div>
             <ProfileSection
               firstName={firstName}
               lastName={lastName}

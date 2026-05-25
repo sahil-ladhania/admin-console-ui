@@ -1,22 +1,22 @@
 
 export const getBookingStatusColor = (status: string | undefined | null) => {
   if (!status) {
-    return "bg-gray-100 text-gray-800 border-gray-200"; // default fallback
+    return "bg-muted text-muted-foreground border border-border";
   }
-  
+
   const statusLower = status.toLowerCase();
   switch (statusLower) {
     case "confirmed":
-      return "bg-emerald-100 text-emerald-800 border-emerald-200";
+      return "bg-success/15 text-success border border-success/30";
     case "pending":
-      return "bg-amber-100 text-amber-800 border-amber-200";
+      return "bg-warning/15 text-warning border border-warning/30";
     case "cancelled":
-      return "bg-red-100 text-red-800 border-red-200";
+      return "bg-destructive/15 text-destructive border border-destructive/30";
     case "checked_in":
-      return "bg-blue-100 text-blue-800 border-blue-200";
+      return "bg-primary/15 text-primary border border-primary/30";
     case "checked_out":
-      return "bg-gray-100 text-gray-800 border-gray-200";
+      return "bg-muted text-muted-foreground border border-border";
     default:
-      return "bg-gray-100 text-gray-800 border-gray-200";
+      return "bg-muted text-muted-foreground border border-border";
   }
 };

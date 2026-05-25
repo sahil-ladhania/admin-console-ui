@@ -1,13 +1,14 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Menu, LogOut, ChevronUp, KeyRound } from "lucide-react";
+import { Menu, LogOut, ChevronUp, KeyRound, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useState, useCallback, memo } from "react";
+import { useState, useCallback, memo, useEffect } from "react";
 import ChangePasswordModalComponent from "@/components/auth/ChangePasswordModalComponent";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "@/components/common/ThemeToggle";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useMutation } from "@tanstack/react-query";
@@ -33,28 +34,50 @@ interface NavItemsProps {
   userRole: string | undefined;
   isActive: (path: string) => boolean;
   onItemClick: () => void;
+  collapsed?: boolean;
 }
 
-const NavItems = memo(function NavItems({ userRole, isActive, onItemClick }: NavItemsProps) {
+const NavItems = memo(function NavItems({ userRole, isActive, onItemClick, collapsed }: NavItemsProps) {
   const navigationItems = getNavigationItems(userRole);
   return (
     <>
       {navigationItems.map((item) => (
-        <NavLink
-          key={item.name}
-          to={item.href}
-          className={cn(
-            "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
-            "hover:bg-secondary/80 hover:shadow-soft",
-            isActive(item.href)
-              ? "bg-gradient-primary text-primary-foreground shadow-medium"
-              : "text-foreground"
-          )}
-          onClick={onItemClick}
-        >
-          <item.icon className="h-5 w-5" />
-          <span className="font-medium">{item.name}</span>
-        </NavLink>
+        collapsed ? (
+          <Tooltip key={item.name} delayDuration={0}>
+            <TooltipTrigger asChild>
+              <NavLink
+                to={item.href}
+                className={cn(
+                  "flex items-center justify-center p-3 rounded-lg transition-all duration-200",
+                  "hover:bg-secondary/80 hover:shadow-soft",
+                  isActive(item.href)
+                    ? "bg-gradient-primary text-primary-foreground shadow-medium"
+                    : "text-foreground"
+                )}
+                onClick={onItemClick}
+              >
+                <item.icon className="h-5 w-5 shrink-0" />
+              </NavLink>
+            </TooltipTrigger>
+            <TooltipContent side="right" sideOffset={8}>{item.name}</TooltipContent>
+          </Tooltip>
+        ) : (
+          <NavLink
+            key={item.name}
+            to={item.href}
+            className={cn(
+              "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
+              "hover:bg-secondary/80 hover:shadow-soft",
+              isActive(item.href)
+                ? "bg-gradient-primary text-primary-foreground shadow-medium"
+                : "text-foreground"
+            )}
+            onClick={onItemClick}
+          >
+            <item.icon className="h-5 w-5 shrink-0" />
+            <span className="font-medium">{item.name}</span>
+          </NavLink>
+        )
       ))}
     </>
   );
@@ -116,6 +139,15 @@ export function Navigation() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Sync sidebar width to CSS variable so Layout.tsx can read it via Tailwind
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--sidebar-w',
+      isCollapsed ? '64px' : '256px'
+    );
+  }, [isCollapsed]);
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -205,28 +237,92 @@ export function Navigation() {
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-border lg:bg-card">
+      <div
+        className={cn(
+          "hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:border-r lg:border-border lg:bg-card transition-all duration-300 ease-in-out",
+          isCollapsed ? "lg:w-16" : "lg:w-64"
+        )}
+      >
         <div className="flex flex-col h-full">
-          <div className="p-6 flex-1">
-            <div className="mb-8">
-              <TBKLogo className="h-12 w-auto" />
-            </div>
-            <nav className="space-y-2">
+          {/* Top: Logo + Collapse Toggle */}
+          <div className={cn(
+            "flex items-center border-b border-border shrink-0",
+            isCollapsed ? "flex-col gap-3 p-3" : "justify-between px-5 py-4"
+          )}>
+            <TBKLogo className={cn(
+              "text-primary transition-all duration-300",
+              isCollapsed ? "h-7 w-auto" : "h-10 w-auto"
+            )} />
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                  className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
+                  aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+                >
+                  {isCollapsed
+                    ? <PanelLeftOpen className="h-4 w-4" />
+                    : <PanelLeftClose className="h-4 w-4" />
+                  }
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right" sideOffset={8}>
+                {isCollapsed ? 'Expand' : 'Collapse'}
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          {/* Nav Items */}
+          <div className={cn("flex-1 overflow-y-auto", isCollapsed ? "p-2" : "p-4")}>
+            <nav className="space-y-1">
               <NavItems
                 userRole={userRole}
                 isActive={isActive}
-                onItemClick={() => setIsMobileMenuOpen(false)}
+                onItemClick={() => {}}
+                collapsed={isCollapsed}
               />
             </nav>
           </div>
-          <div className="p-6 pt-0">
-            <ProfileSection
-              firstName={firstName}
-              lastName={lastName}
-              email={email}
-              onLogout={handleLogout}
-              onChangePassword={handleChangePassword}
-            />
+
+          {/* Bottom: Profile */}
+          <div className={cn("shrink-0 border-t border-border", isCollapsed ? "p-2" : "p-4")}>
+            {isCollapsed ? (
+              // Collapsed: just avatar as dropdown trigger
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="w-full h-10">
+                        <Avatar className="h-7 w-7">
+                          <AvatarFallback className="bg-primary text-primary-foreground text-xs font-medium">
+                            {firstName.charAt(0).toUpperCase()}{lastName.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" side="right" sideOffset={8} className="w-56">
+                      <DropdownMenuItem onClick={handleChangePassword} className="cursor-pointer">
+                        <KeyRound className="mr-2 h-4 w-4" /><span>Change Password</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleLogout} className="cursor-pointer hover:bg-destructive/10 hover:text-destructive focus:bg-destructive/10 focus:text-destructive">
+                        <LogOut className="mr-2 h-4 w-4" /><span>Log out</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TooltipTrigger>
+                <TooltipContent side="right" sideOffset={8}>{firstName} {lastName}</TooltipContent>
+              </Tooltip>
+            ) : (
+              <ProfileSection
+                firstName={firstName}
+                lastName={lastName}
+                email={email}
+                onLogout={handleLogout}
+                onChangePassword={handleChangePassword}
+              />
+            )}
           </div>
         </div>
       </div>

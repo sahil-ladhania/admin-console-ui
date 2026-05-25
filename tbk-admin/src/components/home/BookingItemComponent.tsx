@@ -128,11 +128,10 @@ export default function BookingItemComponent({ booking }) {
             {/* Booking Status Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <div className={`${getBookingStatusColor(booking.status)} px-2 py-1 rounded-full cursor-pointer hover:shadow-sm hover:scale-105 transition-all duration-200 border border-transparent hover:border-gray-300 flex items-center gap-1 text-xs ${updateBookingStatusMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}>
+                <div className={`${getBookingStatusColor(booking.status)} px-2.5 py-1 rounded-full cursor-pointer hover:shadow-soft hover:scale-105 transition-all duration-200 flex items-center gap-1.5 text-xs font-medium select-none ${updateBookingStatusMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''}`}>
                   <BookingStatusIcon className="h-3 w-3" />
-                  <span className="font-medium hidden xs:inline">{booking.status}</span>
-                  <ChevronDown className="h-2 w-2 opacity-60" />
+                  <span className="hidden xs:inline">{booking.status}</span>
+                  <ChevronDown className="h-2.5 w-2.5 opacity-50" />
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="min-w-[130px]">
@@ -141,7 +140,7 @@ export default function BookingItemComponent({ booking }) {
                   className="cursor-pointer text-xs"
                   disabled={updateBookingStatusMutation.isPending}
                 >
-                  <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                  <CheckCircle className="h-3 w-3 mr-2 text-success" />
                   Confirmed
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -149,7 +148,7 @@ export default function BookingItemComponent({ booking }) {
                   className="cursor-pointer text-xs"
                   disabled={updateBookingStatusMutation.isPending}
                 >
-                  <CheckCircle className="h-3 w-3 mr-2 text-blue-600" />
+                  <CheckCircle className="h-3 w-3 mr-2 text-primary" />
                   Checked In
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -157,7 +156,7 @@ export default function BookingItemComponent({ booking }) {
                   className="cursor-pointer text-xs"
                   disabled={updateBookingStatusMutation.isPending}
                 >
-                  <CheckCircle className="h-3 w-3 mr-2 text-purple-600" />
+                  <CheckCircle className="h-3 w-3 mr-2 text-muted-foreground" />
                   Checked Out
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -165,7 +164,7 @@ export default function BookingItemComponent({ booking }) {
                   className="cursor-pointer text-xs"
                   disabled={updateBookingStatusMutation.isPending}
                 >
-                  <XCircle className="h-3 w-3 mr-2 text-red-600" />
+                  <XCircle className="h-3 w-3 mr-2 text-destructive" />
                   Cancelled
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -174,11 +173,10 @@ export default function BookingItemComponent({ booking }) {
             {/* Payment Status Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <div className={`${getPaymentStatusColor(booking.rawBookingData?.paymentStatus)} px-2 py-1 rounded-full cursor-pointer hover:shadow-sm hover:scale-105 transition-all duration-200 border border-transparent hover:border-gray-300 flex items-center gap-1 text-xs ${updatePaymentStatusMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}>
+                <div className={`${getPaymentStatusColor(booking.rawBookingData?.paymentStatus)} px-2.5 py-1 rounded-full cursor-pointer hover:shadow-soft hover:scale-105 transition-all duration-200 flex items-center gap-1.5 text-xs font-medium select-none ${updatePaymentStatusMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''}`}>
                   <PaymentStatusIcon className="h-3 w-3" />
-                  <span className="font-medium hidden xs:inline">{booking.rawBookingData?.paymentStatus || 'PENDING'}</span>
-                  <ChevronDown className="h-2 w-2 opacity-60" />
+                  <span className="hidden xs:inline">{booking.rawBookingData?.paymentStatus || 'PENDING'}</span>
+                  <ChevronDown className="h-2.5 w-2.5 opacity-50" />
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="min-w-[120px]">
@@ -187,7 +185,7 @@ export default function BookingItemComponent({ booking }) {
                   className="cursor-pointer text-xs"
                   disabled={updatePaymentStatusMutation.isPending}
                 >
-                  <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                  <CheckCircle className="h-3 w-3 mr-2 text-success" />
                   Paid
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -195,7 +193,7 @@ export default function BookingItemComponent({ booking }) {
                   className="cursor-pointer text-xs"
                   disabled={updatePaymentStatusMutation.isPending}
                 >
-                  <Clock className="h-3 w-3 mr-2 text-yellow-600" />
+                  <Clock className="h-3 w-3 mr-2 text-warning" />
                   Pending
                 </DropdownMenuItem>
               </DropdownMenuContent>

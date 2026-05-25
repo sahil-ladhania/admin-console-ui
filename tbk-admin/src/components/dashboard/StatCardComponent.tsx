@@ -33,10 +33,8 @@ export default function StatCardComponent({ title, value, change, icon, gradient
             <p className="text-[11px] text-muted-foreground/70 mt-0.5 leading-tight">{subtitle}</p>
           )}
         </div>
-        {/* Refined icon container — gradient pill with soft glow ring */}
-        <div className={`p-2.5 rounded-xl ${gradient || 'bg-secondary'} shadow-soft ring-1 ring-white/10 shrink-0`}>
-          <IconComponent className="h-4 w-4 text-primary-foreground drop-shadow-sm" />
-        </div>
+        {/* Clean icon — no background, just the brand-colored glyph */}
+        <IconComponent className="h-5 w-5 text-primary opacity-80 shrink-0" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold text-foreground font-mono">{value}</div>

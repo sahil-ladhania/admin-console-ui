@@ -14,8 +14,10 @@ export function Layout() {
       <div className="hidden lg:flex no-print fixed top-4 right-6 z-40">
         <ThemeToggle />
       </div>
-      <div className="lg:pl-64 print-content-wrapper">
-        {/* Different Pages */}
+      {/* Content area — padding-left follows CSS var set by Navigation on collapse (desktop only) */}
+      <div
+        className="print-content-wrapper transition-all duration-300 ease-in-out lg:pl-[var(--sidebar-w,256px)]"
+      >
         <main className="p-4 lg:p-8">
           <div className="no-print">
             <BackButtonComponent />

@@ -172,35 +172,35 @@ export function Navigation() {
       <div className="lg:hidden bg-card border-b border-border px-4 py-3">
         <div className="flex items-center justify-between">
           <TBKLogo className="h-8 w-auto text-primary" />
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-72 flex flex-col">
-              <div className="mb-8">
-                <TBKLogo className="h-12 w-auto" />
-              </div>
-              <nav className="space-y-2 flex-1">
-                <NavItems
-                  userRole={userRole}
-                  isActive={isActive}
-                  onItemClick={() => setIsMobileMenuOpen(false)}
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-72 flex flex-col">
+                <div className="mb-8">
+                  <TBKLogo className="h-12 w-auto" />
+                </div>
+                <nav className="space-y-2 flex-1">
+                  <NavItems
+                    userRole={userRole}
+                    isActive={isActive}
+                    onItemClick={() => setIsMobileMenuOpen(false)}
+                  />
+                </nav>
+                <ProfileSection
+                  firstName={firstName}
+                  lastName={lastName}
+                  email={email}
+                  onLogout={handleLogout}
+                  onChangePassword={handleChangePassword}
                 />
-              </nav>
-              <div className="pt-4 pb-2 border-t border-border flex items-center px-2">
-                <ThemeToggle />
-              </div>
-              <ProfileSection
-                firstName={firstName}
-                lastName={lastName}
-                email={email}
-                onLogout={handleLogout}
-                onChangePassword={handleChangePassword}
-              />
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
 
@@ -220,9 +220,6 @@ export function Navigation() {
             </nav>
           </div>
           <div className="p-6 pt-0">
-            <div className="pb-2 mb-2 border-t border-border flex items-center pt-4">
-              <ThemeToggle />
-            </div>
             <ProfileSection
               firstName={firstName}
               lastName={lastName}

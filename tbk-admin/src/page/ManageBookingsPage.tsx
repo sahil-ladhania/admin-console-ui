@@ -10,14 +10,39 @@ export default function ManageBookingsPage() {
   const [bookingStatus, setBookingStatus] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
   const [checkInDate, setCheckInDate] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleClearDate = () => setCheckInDate(null);
+  const handleSearchChange = (val: string) => {
+    setSearchText(val);
+    setCurrentPage(1);
+  };
+
+  const handleStatusFilterChange = (val: string) => {
+    setBookingStatus(val);
+    setCurrentPage(1);
+  };
+
+  const handlePaymentStatusFilterChange = (val: string) => {
+    setPaymentStatus(val);
+    setCurrentPage(1);
+  };
+
+  const handleCheckInDateChange = (val: any) => {
+    setCheckInDate(val);
+    setCurrentPage(1);
+  };
+
+  const handleClearDate = () => {
+    setCheckInDate(null);
+    setCurrentPage(1);
+  };
 
   const handleClearAllFilters = () => {
     setSearchText("");
     setBookingStatus("");
     setPaymentStatus("");
     setCheckInDate(null);
+    setCurrentPage(1);
   };
 
   const checkInDateString = checkInDate
@@ -25,8 +50,8 @@ export default function ManageBookingsPage() {
     : null;
 
   const { data } = useQuery({
-    queryKey: ['bookings', searchText, bookingStatus, paymentStatus, checkInDateString],
-    queryFn: () => searchAndFilterBookingsService(searchText, bookingStatus, paymentStatus, checkInDateString),
+    queryKey: ['bookings', searchText, bookingStatus, paymentStatus, checkInDateString, currentPage],
+    queryFn: () => searchAndFilterBookingsService(searchText, bookingStatus, paymentStatus, checkInDateString, currentPage, 10),
   });
 
   return (
@@ -38,16 +63,21 @@ export default function ManageBookingsPage() {
         statusFilter={bookingStatus}
         paymentStatusFilter={paymentStatus}
         checkInDate={checkInDate}
-        onSearchChange={setSearchText}
-        onStatusFilterChange={setBookingStatus}
-        onPaymentStatusFilterChange={setPaymentStatus}
-        onCheckInDateChange={setCheckInDate}
+        onSearchChange={handleSearchChange}
+        onStatusFilterChange={handleStatusFilterChange}
+        onPaymentStatusFilterChange={handlePaymentStatusFilterChange}
+        onCheckInDateChange={handleCheckInDateChange}
         onClearDate={handleClearDate}
         onClearAllFilters={handleClearAllFilters}
       />
 
       {/* ✅ Direct prop pass — Redux bypass */}
-      <BookingsListComponent bookings={data || []} />
+      <BookingsListComponent 
+        bookings={data?.bookings || []} 
+        pagination={data?.pagination}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

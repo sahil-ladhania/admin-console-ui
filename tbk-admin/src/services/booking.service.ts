@@ -14,9 +14,16 @@ export const addBookingService = async (formData: Booking_Data): Promise<void> =
 }
 
 // Service to Search and Filter Bookings Service
-export const searchAndFilterBookingsService = async (searchText: string, bookingStatus: string, paymentStatus: string, checkInDate: string): Promise<[]> => {
+export const searchAndFilterBookingsService = async (
+    searchText: string, 
+    bookingStatus: string, 
+    paymentStatus: string, 
+    checkInDate: string,
+    page?: number,
+    limit?: number
+): Promise<any> => {
     const response = await apiService.get('/bookings/v1/search', {
-        params: { searchText, bookingStatus, paymentStatus, checkInDate }
+        params: { searchText, bookingStatus, paymentStatus, checkInDate, page, limit }
     });
     return response.data;
 }
